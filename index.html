@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>countdown to my birthday!</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #282c34;
+            color: #61dafb;
+        }
+        .countdown {
+            text-align: center;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown">
+        <h1>countdown to my birthday lol</h1>
+        <p id="timer">Loading...</p>
+    </div>
+
+    <script>
+        function countdown() {
+            // checks year if its march 25
+            const today = new Date();
+            let targetDate = new Date(today.getFullYear(), 2, 25); // March 25 (Month is 0-indexed, so 2 is March)
+            
+            // if the target date has passed for this year set it to next year
+            if (today > targetDate) {
+                targetDate = new Date(today.getFullYear() + 1, 2, 25);
+            }
+
+            // Update the countdown every second
+            const timer = setInterval(() => {
+                const now = new Date();
+                const timeLeft = targetDate - now;
+
+                // Calculate days, hours, minutes, and seconds left
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                // Display the result in the timer element
+                document.getElementById("timer").innerHTML = 
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+                // If the countdown is finished, display a message
+                if (timeLeft < 0) {
+                    clearInterval(timer);
+                    document.getElementById("timer").innerHTML = "It's March 25!";
+                }
+            }, 1000);
+        }
+
+        // start the countdown when the page loads
+        countdown();
+    </script>
+</body>
+</html>
